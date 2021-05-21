@@ -3,6 +3,7 @@ package xyz.jonam.dispatcher.servlet;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import xyz.jonam.dispatcher.servlet.annotation.TestAnnotation;
 
 import java.io.IOException;
 
@@ -16,7 +17,13 @@ public class AnnotationScannerTest {
   }
 
   @Test
-  public void getClassesAnnotated() throws IOException {
-    assertTrue(annotationScanner.getClassesAnnotated("test").size() > 0);
+  public void getAllClassesTest() throws IOException {
+    assertTrue(annotationScanner.getAllClasses().size() > 0);
+  }
+
+  @Test
+  public void getAllClassesAnnotated() throws IOException {
+    assertEquals(2,
+            annotationScanner.getClassesAnnotatedWith(TestAnnotation.class).size());
   }
 }
