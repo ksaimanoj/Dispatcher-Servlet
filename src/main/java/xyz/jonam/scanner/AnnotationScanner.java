@@ -1,4 +1,4 @@
-package xyz.jonam.dispatcher.servlet;
+package xyz.jonam.scanner;
 
 import java.io.File;
 import java.io.IOException;

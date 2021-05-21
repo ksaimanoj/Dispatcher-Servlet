@@ -1,4 +1,4 @@
-package xyz.jonam.dispatcher.servlet.annotation;
+package xyz.jonam.scanner.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

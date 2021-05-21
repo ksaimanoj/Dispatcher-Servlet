@@ -1,2 +1,2 @@
-# Dispatcher-Servlet
-Attempt to implement the DispatcherServlet of Spring Framework and have fun while doing that
+# scanner
+Attempt to create a light-weight library that can be used to scan for Java classes in Runtime

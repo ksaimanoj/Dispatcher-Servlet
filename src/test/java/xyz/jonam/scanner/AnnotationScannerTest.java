@@ -1,9 +1,9 @@
-package xyz.jonam.dispatcher.servlet;
+package xyz.jonam.scanner;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import xyz.jonam.dispatcher.servlet.annotation.TestAnnotation;
+import xyz.jonam.scanner.annotation.TestAnnotation;
 
 import java.io.IOException;
 
