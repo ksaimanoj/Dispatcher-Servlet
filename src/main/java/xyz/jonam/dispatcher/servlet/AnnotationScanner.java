@@ -21,30 +21,33 @@ public class AnnotationScanner {
   }
 
   public List<String> getClassesWithinPackage(String basePackage) throws IOException {
-    String basePath = basePackage.replace(".", "/");
+    String basePath = convertPackageToPath(basePackage);
     Enumeration<URL> urlEnumeration = ClassLoader.getSystemResources(basePath);
 
     List<String> allFiles = new ArrayList<>();
 
     while(urlEnumeration.hasMoreElements()) {
       URL url = urlEnumeration.nextElement();
-      String filePath = url.getFile();
-      File file = new File(filePath);
+      File file = new File(url.getFile());
       allFiles.addAll(analyseFile(file, basePackage));
     }
     return allFiles;
   }
 
-  private List<String> analyseFile(File file, String packageName) {
+  private String convertPackageToPath(String basePackage) {
+    return basePackage.replace(".", "/");
+  }
+
+  private List<String> analyseFile(File file, String fullyQualifiedName) {
     if (file.isDirectory()) {
       return Arrays.stream(Objects.requireNonNull(file.listFiles()))
-          .map(subFile -> analyseFile(subFile, packageName + "." + subFile.getName()))
+          .map(subFile -> analyseFile(subFile, fullyQualifiedName + "." + subFile.getName()))
           .flatMap(Collection::stream)
           .collect(Collectors.toList());
     } else {
       List<String> files = new ArrayList<>();
       if (file.getName().endsWith(".class")) {
-        files.add(packageName);
+        files.add(fullyQualifiedName);
       }
       return files;
     }
@@ -55,15 +58,18 @@ public class AnnotationScanner {
     List<Class> annotatedClasses = new ArrayList<>();
     for (String s : classes) {
       try{
-        Class clazz = Class.forName(s.substring(0, s.length() - 6));
+        Class clazz = Class.forName(removeExtension(s));
         if(clazz.isAnnotationPresent(annotation)) {
           annotatedClasses.add(clazz);
         }
       } catch (ClassNotFoundException ex) {
-        System.out.println("Error while trying to create class object for " + s);
-        ex.printStackTrace();
+        //ignored
       }
     }
     return annotatedClasses;
+  }
+
+  private String removeExtension(String s) {
+    return s.substring(0, s.length() - 6);
   }
 }
