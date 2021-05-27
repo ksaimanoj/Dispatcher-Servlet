@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ClassScannerTest {
 
@@ -14,6 +15,8 @@ public class ClassScannerTest {
 
   @Test
   public void getAllClassesWithinPackage() throws IOException {
-    assertTrue(ClassScanner.getAllClassesWithinPackage("xyz.jonam.scanner").size() > 0);
+    List<Class> classes = ClassScanner.getAllClassesWithinPackage("xyz.jonam.scanner");
+    assertTrue(classes.size() > 0);
+    for(Class clazz : classes) assertNotNull(clazz);
   }
 }

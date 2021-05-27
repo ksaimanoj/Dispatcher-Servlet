@@ -22,9 +22,9 @@ public class ClassScanner {
 
   private static Class getClassFromFilePath(String filePath) {
     try {
-      return Class.forName(filePath);
+      return Class.forName(removeExtension(filePath.replace("/", ".")));
     } catch (ClassNotFoundException e) {
-      // ignored. To Log.
+      e.printStackTrace();
     }
     return null;
   }
@@ -41,7 +41,7 @@ public class ClassScanner {
       if(file.isDirectory()) {
         files.addAll(getAllFilesWithinDirectory(file, basePackage));
       } else {
-        files.add(basePackage + File.separator + file.getName());
+        files.add(basePackage + "." + file.getName());
       }
     }
     return files;
@@ -51,9 +51,13 @@ public class ClassScanner {
     List<String> files = new ArrayList<>();
     for(File file : Objects.requireNonNull(directory.listFiles())) {
       if(file.isDirectory()) files.addAll(getAllFilesWithinDirectory(file,
-              directoryPath + File.separator + file.getName()));
-      else files.add(directory + File.pathSeparator + file.getName());
+              directoryPath + "/" + file.getName()));
+      else files.add(directoryPath + "." + file.getName());
     }
     return files;
+  }
+
+  private static String removeExtension(String s) {
+    return s.substring(0, s.length() - 6);
   }
 }

@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class AnnotationScanner {
 
-  private static final String DEFAULT_PACKAGE = "xyz.jonam.dispatcher.servlet";
+  private static final String DEFAULT_PACKAGE = "xyz.jonam.scanner";
 
   List<String> getAllClasses() throws IOException {
     return getClassesWithinPackage(DEFAULT_PACKAGE);
